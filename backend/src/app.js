@@ -11,4 +11,9 @@ app.use("/reports", require("./routes/upload.routes"));
 app.use("/dashboard", require("./routes/dashboard.routes"));
 app.use("/job-status", require("./routes/job.routes"));
 
+if (process.env.RUN_WORKER === "true") {
+  require("./workers/csvWorker");
+}
+
+
 module.exports = app;
