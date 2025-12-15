@@ -10,6 +10,7 @@ app.use("/report", require("./routes/report.routes"));
 app.use("/reports", require("./routes/upload.routes"));
 app.use("/dashboard", require("./routes/dashboard.routes"));
 app.use("/job-status", require("./routes/job.routes"));
+app.use("/auth", require("./routes/auth.routes"));
 
 if (process.env.RUN_WORKER === "true") {
   require("./workers/csvWorkers");

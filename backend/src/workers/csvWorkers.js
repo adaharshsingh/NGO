@@ -10,10 +10,25 @@ const Job = require("../models/Job");
 new Worker(
   "csv-upload-queue",
   async (job) => {
-    const { jobId, rows } = job.data;
+    console.log("JOB DATA RECEIVED:", JSON.stringify(job.data, null, 2));
+
+    const { jobId, rows } = job.data || {};
+
+    if (!jobId) {
+      console.log("jobId missing");
+      return;
+    }
+
+    if (!rows || !Array.isArray(rows)) {
+      console.log("rows missing or not array:", rows);
+      return;
+    }
 
     const jobDoc = await Job.findById(jobId);
-    if (!jobDoc) return;
+    if (!jobDoc) {
+      console.log("❌ Job not found in DB");
+      return;
+    }
 
     jobDoc.status = "processing";
     await jobDoc.save();
@@ -57,6 +72,8 @@ new Worker(
     jobDoc.failedRows = failed;
     jobDoc.status = "completed";
     await jobDoc.save();
+
+    console.log("JOB COMPLETED", { processed, failed });
   },
   { connection: redis }
 );
