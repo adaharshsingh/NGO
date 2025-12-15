@@ -102,6 +102,8 @@ export default function AdminLogin() {
         >
           {loading ? "Signing in..." : "Login"}
         </button>
+        <p>UserName : test@example.com </p>
+        <p>Password : 123456</p>
       </div>
     </div>
   );

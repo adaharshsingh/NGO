@@ -38,12 +38,6 @@ export default function Navbar() {
 
         {token && (
           <>
-            <button
-              onClick={() => navigate("/dashboard")}
-              className="border px-3 py-1 rounded"
-            >
-              Dashboard
-            </button>
 
             <button
               onClick={logout}
